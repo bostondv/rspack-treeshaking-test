@@ -59,7 +59,7 @@
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.k = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + ".css";
+/******/ 			return "" + chunkId + "-" + {"946":"6434874e96bccf9dc612"}[chunkId] + ".webpack_chunk.css";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -68,20 +68,8 @@
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + ".js";
+/******/ 			return "" + chunkId + "-" + {"858":"26f3fdb7a4c213e7ad5a","946":"5b27acb78767a1813bae"}[chunkId] + ".webpack_chunk.js";
 /******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
@@ -114,6 +102,7 @@
 /******/ 					script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 				}
 /******/ 				script.setAttribute("data-webpack", dataWebpackPrefix + key);
+/******/ 		
 /******/ 				script.src = url;
 /******/ 			}
 /******/ 			inProgress[url] = [done];
@@ -147,22 +136,7 @@
 /******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	(() => {
-/******/ 		var scriptUrl;
-/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
-/******/ 		var document = __webpack_require__.g.document;
-/******/ 		if (!scriptUrl && document) {
-/******/ 			if (document.currentScript)
-/******/ 				scriptUrl = document.currentScript.src;
-/******/ 			if (!scriptUrl) {
-/******/ 				var scripts = document.getElementsByTagName("script");
-/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
-/******/ 			}
-/******/ 		}
-/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
-/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
-/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
-/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
-/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 		__webpack_require__.p = "/assets/rspack/";
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/css loading */
@@ -170,13 +144,24 @@
 /******/ 		// object to store loaded and loading chunks
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-/******/ 		var installedChunks = {"main":0};
+/******/ 		var installedChunks = {179:0};
 /******/ 		
 /******/ 		var uniqueName = "rspack-repro";
 /******/ 		var loadCssChunkData = (target, link, chunkId) => {
-/******/ 			var data, token = "", token2, exports = {}, exportsWithId = [], exportsWithDashes = [], i = 0, cc = 1;
-/******/ 			try { if(!link) link = loadStylesheet(chunkId); data = link.sheet.cssRules; data = data[data.length - 1].style; } catch(e) { data = getComputedStyle(document.head); }
-/******/ 			data = data.getPropertyValue("--webpack-" + uniqueName + "-" + chunkId);
+/******/ 			var data, token = "", token2, exports = {}, exportsWithId = [], exportsWithDashes = [], name = "--webpack-" + uniqueName + "-" + chunkId, i = 0, cc = 1;
+/******/ 			try {
+/******/ 				if(!link) link = loadStylesheet(chunkId);
+/******/ 				var cssRules = link.sheet.cssRules || link.sheet.rules;
+/******/ 				var j = cssRules.length - 1;
+/******/ 				while(j > -1 && !data) {
+/******/ 					var style = cssRules[j--].style;
+/******/ 					if(!style) continue;
+/******/ 					data = style.getPropertyValue(name);
+/******/ 				}
+/******/ 			}catch(e){}
+/******/ 			if(!data) {
+/******/ 				data = getComputedStyle(document.head).getPropertyValue(name);
+/******/ 			}
 /******/ 			if(!data) return [];
 /******/ 			for(; cc; i++) {
 /******/ 				cc = data.charCodeAt(i);
@@ -239,7 +224,7 @@
 /******/ 				if(installedChunkData) {
 /******/ 					promises.push(installedChunkData[2]);
 /******/ 				} else {
-/******/ 					if("src_render_js" == chunkId) {
+/******/ 					if(946 == chunkId) {
 /******/ 						// setup Promise in chunk cache
 /******/ 						var promise = new Promise((resolve, reject) => (installedChunkData = installedChunks[chunkId] = [resolve, reject]));
 /******/ 						promises.push(installedChunkData[2] = promise);
@@ -255,11 +240,11 @@
 /******/ 								if(installedChunkData) {
 /******/ 									if(event.type !== "load") {
 /******/ 										var errorType = event && event.type;
-/******/ 										var realSrc = event && event.target && event.target.src;
-/******/ 										error.message = 'Loading css chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+/******/ 										var realHref = event && event.target && event.target.href;
+/******/ 										error.message = 'Loading css chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realHref + ')';
 /******/ 										error.name = 'ChunkLoadError';
 /******/ 										error.type = errorType;
-/******/ 										error.request = realSrc;
+/******/ 										error.request = realHref;
 /******/ 										installedChunkData[1](error);
 /******/ 									} else {
 /******/ 										loadCssChunkData(__webpack_require__.m, link, chunkId);
@@ -285,7 +270,7 @@
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
-/******/ 			"main": 0
+/******/ 			179: 0
 /******/ 		};
 /******/ 		
 /******/ 		__webpack_require__.f.j = (chunkId, promises) => {
@@ -322,7 +307,7 @@
 /******/ 								}
 /******/ 							};
 /******/ 							__webpack_require__.l(url, loadingEnded, "chunk-" + chunkId, chunkId);
-/******/ 						} else installedChunks[chunkId] = 0;
+/******/ 						}
 /******/ 					}
 /******/ 				}
 /******/ 		};
@@ -369,12 +354,8 @@
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-__webpack_require__.e(/*! import() */ "src_render_js").then(__webpack_require__.bind(__webpack_require__, /*! ./render */ "./src/render.js")).then(exports => {
-    exports.render()
-})
-
+Promise.all(/* import() */[__webpack_require__.e(858), __webpack_require__.e(946)]).then(__webpack_require__.bind(__webpack_require__, 946)).then(function (exports) {
+  exports.render();
+});
 /******/ })()
 ;

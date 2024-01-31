@@ -1,0 +1,1 @@
+{"version":3,"file":"main.webpack_bundle-5a85a12f385a274b537e.js","sources":["webpack://rspack-repro/./src/index.ts"],"sourcesContent":["import('./render').then(exports => {\n  exports.render()\n})"],"names":["then","exports","render"],"mappings":";;;AAAA,mJAAkB,CAACA,IAAI,CAAC,SAAAC,OAAO;IAC7BA,QAAQC,MAAM;AAChB"}
